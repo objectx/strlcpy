@@ -8,14 +8,24 @@
 #include <string.h>
 
 size_t	strlcpy (char * dst, const char * src, size_t dstsize) {
-    size_t	src_len = strlen (src);
-
-    if ((dstsize - 1) < src_len) {
-	src_len = dstsize - 1;
+    if (dst == 0 || dstsize == 0) {
+	return 0;
     }
-    (void)memcpy (dst, src, src_len);
-    dst [src_len] = 0;
-    return src_len;
+    if (src == 0) {
+	dst [0] = 0;
+	return 0;
+    }
+    else {
+        size_t	src_len = strlen (src);
+        size_t	dstlimit = dstsize - 1;
+
+        if (dstlimit < src_len) {
+	    src_len = dstlimit;
+        }
+        memcpy (dst, src, src_len);
+        dst [src_len] = 0;
+        return src_len;
+    }
 }
 
 /*
