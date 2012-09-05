@@ -13,6 +13,20 @@ static void	test_strlcpy () {
     size_t	result;
 
     memset (dst, 0xFF, sizeof(dst));
+    result = strlcpy (dst, alphabets, 0);
+    assert (result == 0);
+    assert (dst [0] == '\xFF');
+
+    memset (dst, 0xFF, sizeof(dst));
+    result = strlcpy (0, alphabets, sizeof(dst));
+    assert (result == 0);
+
+    memset (dst, 0xFF, sizeof(dst));
+    result = strlcpy (dst, 0, sizeof(dst));
+    assert (result == 0);
+    assert (dst [0] == 0);
+
+    memset (dst, 0xFF, sizeof(dst));
 
     result = strlcpy (dst, alphabets, 4);
     assert (result == 3);
@@ -29,9 +43,82 @@ static void	test_strlcpy () {
     assert (memcmp (dst, alphabets, alpha_len) == 0);
 }
 
+void	test_strlcat () {
+    char	dst [256];
+    const char	alphabets [] = "abcdefghijklmnopqrstuvwxyz";
+    size_t	alpha_len = strlen (alphabets);
+    size_t	result;
+
+    result = strlcat (0, alphabets, sizeof(dst));
+    assert (result == 0);
+    result = strlcat (dst, alphabets, 0);
+    assert (result == 0);
+
+    memset (dst, 0xFF, sizeof(dst));
+    strlcpy (dst, alphabets, sizeof(dst));
+    result = strlcat (dst, 0, sizeof(dst));
+    assert (result == alpha_len);
+    assert (dst [alpha_len + 0] == 0);
+    assert (dst [alpha_len + 1] == '\xFF');
+    assert (memcmp (dst, alphabets, alpha_len) == 0);
+
+    memset (dst, 0xFF, sizeof(dst));
+    dst [0] = 'A';
+    dst [1] = 'B';
+    dst [2] = 'C';
+    dst [3] = 'D';
+    dst [4] = 0;
+    result = strlcat (dst, alphabets, 3);
+    assert (result == 4);
+    assert (dst [4] == 0);
+    assert (dst [5] == '\xFF');
+    assert (memcmp (dst, "ABCD", 4) == 0);
+
+    memset (dst, 0xFF, sizeof(dst));
+    dst [0] = 'A';
+    dst [1] = 'B';
+    dst [2] = 'C';
+    dst [3] = 'D';
+    dst [4] = 0;
+    result = strlcat (dst, alphabets, 5);
+    assert (result == 4);
+    assert (dst [4] == 0);
+    assert (dst [5] == '\xFF');
+    assert (memcmp (dst, "ABCD", 4) == 0);
+
+    memset (dst, 0xFF, sizeof(dst));
+    dst [0] = 'A';
+    dst [1] = 'B';
+    dst [2] = 'C';
+    dst [3] = 'D';
+    dst [4] = 0;
+    result = strlcat (dst, alphabets, alpha_len + 1);
+    assert (result == alpha_len);
+    assert (dst [alpha_len + 0] == 0);
+    assert (dst [alpha_len + 1] == '\xFF');
+    assert (memcmp (dst, "ABCD", 4) == 0);
+    assert (memcmp (dst + 4, alphabets, alpha_len - 4) == 0);
+
+    memset (dst, 0xFF, sizeof(dst));
+    dst [0] = 'A';
+    dst [1] = 'B';
+    dst [2] = 'C';
+    dst [3] = 'D';
+    dst [4] = 0;
+    result = strlcat (dst, alphabets, sizeof (dst));
+    assert (result == alpha_len + 4);
+    assert (dst [4 + alpha_len + 0] == 0);
+    assert (dst [4 + alpha_len + 1] == '\xFF');
+    assert (memcmp (dst, "ABCD", 4) == 0);
+    assert (memcmp (dst + 4, alphabets, alpha_len) == 0);
+
+}
+
 int	main (int argc, char ** argv) {
-    printf ("Testing strlcpy.") ;
+    printf ("Testing strlcpy.");
     test_strlcpy ();
+    printf ("Testing strlcat");
+    test_strlcat ();
     printf ("All tests are passed.") ;
     return 0;
 }
