@@ -8,22 +8,33 @@
 #include <string.h>
 
 size_t	strlcat (char * dst, const char * src, size_t dstsize) {
-    size_t	src_len = strlen (src);
-    size_t	dst_len = strlen (dst);
-    size_t	dstlimit = dstsize - 1;
+    if (dst == 0 || dstsize == 0) {
+	return 0;
+    }
+    else {
+	size_t	dst_len = strlen (dst);
 
-    if (dstlimit < dst_len) {
-	/* Already overflowed.  */
-	return dst_len;
+	if (src == 0) {
+	    return dst_len;
+	}
+	else {
+	    size_t	dstlimit = dstsize - 1;
+	    size_t	src_len = strlen (src);
+
+	    if (dstlimit < dst_len) {
+		/* Already overflowed.  */
+		return dst_len;
+	    }
+	    /* dst_len <= dstlimit */
+	    if (dstlimit < (dst_len + src_len)) {
+		src_len = dstlimit - dst_len;
+		/* 0 <= src_len */
+	    }
+	    memcpy (dst + dst_len, src, src_len);
+	    dst [dst_len + src_len] = 0;
+	    return (dst_len + src_len);
+	}
     }
-    /* dst_len <= dstlimit */
-    if (dstlimit < (dst_len + src_len)) {
-	src_len = dstlimit - dst_len;
-	/* 0 <= src_len */
-    }
-    memcpy (dst + dst_len, src, src_len);
-    dst [dst_len + src_len] = 0;
-    return (dst_len + src_len);
 }
 
 /*
