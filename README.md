@@ -1,4 +1,4 @@
-strlcpy
+strlcpy & strlcat
 =======
 
-Naive implementation of strlcpy and strlcat.
+A naive implementation of strlcpy and strlcat.
