@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "strlcpy", "strlcpy\strlcpy.vcxproj", "{32CBA6EF-9F65-44F7-845A-5CB72A39C306}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_strlcpy", "test_strlcpy\test_strlcpy.vcxproj", "{D6CD5DCC-BC4D-418F-8FD2-9B2AA8FBF6CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32CBA6EF-9F65-44F7-845A-5CB72A39C306}.Debug|Win32.ActiveCfg = Debug|Win32
+		{32CBA6EF-9F65-44F7-845A-5CB72A39C306}.Debug|Win32.Build.0 = Debug|Win32
+		{32CBA6EF-9F65-44F7-845A-5CB72A39C306}.Release|Win32.ActiveCfg = Release|Win32
+		{32CBA6EF-9F65-44F7-845A-5CB72A39C306}.Release|Win32.Build.0 = Release|Win32
+		{D6CD5DCC-BC4D-418F-8FD2-9B2AA8FBF6CE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D6CD5DCC-BC4D-418F-8FD2-9B2AA8FBF6CE}.Debug|Win32.Build.0 = Debug|Win32
+		{D6CD5DCC-BC4D-418F-8FD2-9B2AA8FBF6CE}.Release|Win32.ActiveCfg = Release|Win32
+		{D6CD5DCC-BC4D-418F-8FD2-9B2AA8FBF6CE}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
