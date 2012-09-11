@@ -1,7 +1,9 @@
 /*
- * precomp.c:
+ * precomp.c: For constructing a pre-compiled header.
  *
- * Author(s): objectx
+ * Copyright 2012 Masashi Fujita
+ *
+ * License: Ms-Pl (http://www.opensource.org/licenses/ms-pl.html)
  */
 #include "common.h"
 /*

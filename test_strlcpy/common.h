@@ -1,7 +1,9 @@
 /*
- * common.h:
+ * common.h: Common include files (for utilize pre-compiled header).
  *
- * Author(s): objectx
+ * Copyright 2012 Masashi Fujita
+ *
+ * License: Ms-Pl (http://www.opensource.org/licenses/ms-pl.html)
  */
 #ifndef	common_h__5D80A5054F1D2E78D6D9FAB4123D1AE7
 #define	common_h__5D80A5054F1D2E78D6D9FAB4123D1AE7	1

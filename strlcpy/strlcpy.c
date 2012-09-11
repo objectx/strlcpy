@@ -1,9 +1,10 @@
 /*
- * strlcpy.c:
+ * strlcpy.c: Naive implementation of 'strlcpy'.
  *
- * Author(s): objectx
+ * Copyright 2012 Masashi Fujita
+ *
+ * License: Ms-Pl (http://www.opensource.org/licenses/ms-pl.html)
  */
-
 #include <sys/types.h>
 #include <string.h>
 

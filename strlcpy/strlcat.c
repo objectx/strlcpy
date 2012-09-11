@@ -1,9 +1,10 @@
 /*
- * strlcat.c:
+ * strlcat.c: Naive implementation of 'strlcat'.
  *
- * Author(s): objectx
+ * Copyright 2012 Masashi Fujita
+ *
+ * License: Ms-Pl (http://www.opensource.org/licenses/ms-pl.html)
  */
-
 #include <sys/types.h>
 #include <string.h>
 

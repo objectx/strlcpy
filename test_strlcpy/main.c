@@ -1,9 +1,10 @@
 /*
- * main.c:
+ * main.c: Tests for strlcpy & strlcat.
  *
- * Author(s): objectx
+ * Copyright 2012 Masashi Fujita
+ *
+ * License: Ms-Pl (http://www.opensource.org/licenses/ms-pl.html)
  */
-
 #include "common.h"
 
 static void	test_strlcpy () {
