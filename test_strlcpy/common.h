@@ -18,6 +18,7 @@
 #include <string.h>
 #include <memory.h>
 #include <assert.h>
+#include <stdarg.h>
 
 #if defined (__cplusplus)
 extern "C" {
@@ -25,6 +26,8 @@ extern "C" {
 
 extern size_t	strlcpy (char * dst, const char * src, size_t dstsize);
 extern size_t	strlcat (char * dst, const char * src, size_t dstsize);
+extern size_t	strconcat (char * dst, size_t dstsize, size_t cntArgs, ...);
+extern size_t	vstrconcat (char * dst, size_t dstsize, size_t cntArgs, va_list ap);
 
 #if defined (__cplusplus)
 }	/* end of [extern "C"] */

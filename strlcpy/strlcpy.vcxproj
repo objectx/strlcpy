@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="strconcat.c" />
     <ClCompile Include="strlcat.c" />
     <ClCompile Include="strlcpy.c" />
   </ItemGroup>
