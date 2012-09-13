@@ -126,6 +126,27 @@ void	test_strconcat () {
     result = strconcat (dst, 0, 0);
     assert (result == 0);
 
+    memset (dst, 0xFF, sizeof (dst));
+    result = strconcat (dst, sizeof (dst), 1, "");
+    assert (result == 0);
+    assert (dst [0] == 0);
+    assert (dst [1] == '\xFF');
+
+    memset (dst, 0xFF, sizeof (dst));
+    result = strconcat (dst, sizeof (dst), 2, ".", alphabets);
+    assert (result == 1 + alpha_len);
+    assert (dst [1 + alpha_len + 0] == 0);
+    assert (dst [1 + alpha_len + 1] == '\xFF');
+    assert (dst [0] == '.') ;
+    assert (memcmp (dst + 1, alphabets, alpha_len) == 0);
+
+    memset (dst, 0xFF, sizeof (dst));
+    result = strconcat (dst, sizeof (dst), 2, "", alphabets);
+    assert (result == alpha_len);
+    assert (dst [alpha_len + 0] == 0);
+    assert (dst [alpha_len + 1] == '\xFF');
+    assert (memcmp (dst, alphabets, alpha_len) == 0);
+
     memset (dst, 0xFF, sizeof(dst));
     result = strconcat (dst, sizeof(dst), 1, alphabets);
     assert (result == alpha_len);
