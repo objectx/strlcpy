@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_strlcpy", "test_strlcp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FixedSizeStringBuilder", "FixedSizeStringBuilder\FixedSizeStringBuilder.vcxproj", "{3615E4E6-188B-4862-B513-4EA9CC1AB31B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_FixedSizeStringBuilder", "test_FixedSizeStringBuilder\test_FixedSizeStringBuilder.vcxproj", "{BB3132BB-55B0-4411-A011-70E86D118F21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -25,6 +27,10 @@ Global
 		{3615E4E6-188B-4862-B513-4EA9CC1AB31B}.Debug|Win32.Build.0 = Debug|Win32
 		{3615E4E6-188B-4862-B513-4EA9CC1AB31B}.Release|Win32.ActiveCfg = Release|Win32
 		{3615E4E6-188B-4862-B513-4EA9CC1AB31B}.Release|Win32.Build.0 = Release|Win32
+		{BB3132BB-55B0-4411-A011-70E86D118F21}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BB3132BB-55B0-4411-A011-70E86D118F21}.Debug|Win32.Build.0 = Debug|Win32
+		{BB3132BB-55B0-4411-A011-70E86D118F21}.Release|Win32.ActiveCfg = Release|Win32
+		{BB3132BB-55B0-4411-A011-70E86D118F21}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -186,13 +186,13 @@ void	test_strconcat () {
 }
 
 int	main (int argc, char ** argv) {
-    printf ("Testing strlcpy.");
+    printf ("Testing strlcpy.\n");
     test_strlcpy ();
-    printf ("Testing strlcat");
+    printf ("Testing strlcat\n");
     test_strlcat ();
-    printf ("Testing strconcat");
+    printf ("Testing strconcat\n");
     test_strconcat ();
-    printf ("All tests are passed.") ;
+    printf ("All tests are passed.\n") ;
     return 0;
 }
 
