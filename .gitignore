@@ -16,3 +16,9 @@
 *.obj
 build/
 ipch/
+
+# Visual SlickEdit files.
+*.vpj
+*.vpw
+*.vpwhist
+
