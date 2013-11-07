@@ -11,13 +11,13 @@
 *.la
 *.a
 
-# Visual Studio files.
+# Visual Studio files
 *.vcxproj.users
 *.obj
 build/
 ipch/
 
-# Visual SlickEdit files.
+# Visual SlickEdit files
 *.vpj
 *.vpw
 *.vpwhist
