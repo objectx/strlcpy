@@ -15,25 +15,28 @@
 #   define EXPORT_(X_) X_
 #endif
 
-size_t	EXPORT_(strlcpy) (char * dst, const char * src, size_t dstsize) {
-    if (dst == 0 || dstsize == 0) {
-	return 0;
-    }
+size_t  EXPORT_(strlcpy) (char * dst, const char * src, size_t dstsize) {
     if (src == 0) {
-	dst [0] = 0;
-	return 0;
-    }
-    else {
-        size_t	src_len = strlen (src);
-        size_t	dstlimit = dstsize - 1;
-
-        if (dstlimit < src_len) {
-	    src_len = dstlimit;
+        if (dst != 0 && 0 < dstsize) {
+            dst [0] = 0 ;
         }
-        memcpy (dst, src, src_len);
-        dst [src_len] = 0;
-        return src_len;
+        return 0 ;
     }
+    size_t  src_len = strlen (src) ;
+    size_t  len = src_len ;
+
+    if (dst == 0 || dstsize == 0) {
+        return src_len ;
+    }
+    size_t  dstlimit = dstsize - 1 ;
+
+    if (dstlimit < len) {
+        len = dstlimit ;
+    }
+    memcpy (dst, src, len) ;
+    dst [len] = 0 ;
+
+    return src_len ;
 }
 
 /*
