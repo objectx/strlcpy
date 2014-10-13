@@ -34,12 +34,14 @@ SCENARIO ("strlcpy", "[strlcpy]") {
         }}}
 
 #ifdef TEST_ONLY
+        INFO ("Darwin's strlcpy does not allow nullptr for destination.") ;
         WHEN ("copy to null buffer") {
             result = p_strlcpy (0, alphabets, sizeof (dst)) ;
         THEN ("strlcpy should return source string length (== 26)") {
             REQUIRE (result == alpha_len) ;
         }}
 
+        INFO ("Darwin's strlcpy does not allow nullptr for source.")
         WHEN ("copy from null") {
             result = p_strlcpy (dst, 0, sizeof (dst)) ;
         THEN ("strlcpy should return source string length (== 0)") {
