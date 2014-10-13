@@ -8,7 +8,15 @@
 #include <sys/types.h>
 #include <string.h>
 
-size_t	strlcat (char * dst, const char * src, size_t dstsize) {
+#include "../include/config.h"
+
+#if defined (TEST_ONLY)
+#   define EXPORT_(X_) X_##test
+#else
+#   define EXPORT_(X_) X_
+#endif
+
+size_t	EXPORT_(strlcat) (char * dst, const char * src, size_t dstsize) {
     if (dst == 0 || dstsize == 0) {
 	return 0;
     }

@@ -7,8 +7,15 @@
  */
 #include <sys/types.h>
 #include <string.h>
+#include "../include/config.h"
 
-size_t	strlcpy (char * dst, const char * src, size_t dstsize) {
+#if defined (TEST_ONLY)
+#   define EXPORT_(X_) X_##test
+#else
+#   define EXPORT_(X_) X_
+#endif
+
+size_t	EXPORT_(strlcpy) (char * dst, const char * src, size_t dstsize) {
     if (dst == 0 || dstsize == 0) {
 	return 0;
     }

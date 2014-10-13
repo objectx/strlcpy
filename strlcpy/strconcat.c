@@ -10,6 +10,7 @@
 #include <string.h>
 #include <stdarg.h>
 
+
 size_t	vstrconcat (char * dst, size_t dstsize, size_t cntArgs, va_list ap) {
     if (dst == 0 || dstsize == 0) {
 	return 0;

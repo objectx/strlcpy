@@ -24,8 +24,10 @@
 extern "C" {
 #endif
 
-extern size_t	strlcpy (char * dst, const char * src, size_t dstsize);
-extern size_t	strlcat (char * dst, const char * src, size_t dstsize);
+#if defined (TEST_ONLY)
+extern size_t	strlcpy_test (char * dst, const char * src, size_t dstsize);
+extern size_t	strlcat_test (char * dst, const char * src, size_t dstsize);
+#endif
 extern size_t	strconcat (char * dst, size_t dstsize, size_t cntArgs, ...);
 extern size_t	vstrconcat (char * dst, size_t dstsize, size_t cntArgs, va_list ap);
 

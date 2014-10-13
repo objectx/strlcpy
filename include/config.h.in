@@ -1,0 +1,10 @@
+
+#pragma once
+
+#ifndef config_h_C3010F9066DB4D928E131E9DECF39A3E
+#define config_h_C3010F9066DB4D928E131E9DECF39A3E
+
+#define STRLCPY_VERSION "@version@"
+#mesondefine TEST_ONLY
+
+#endif /* config_h_C3010F9066DB4D928E131E9DECF39A3E */
