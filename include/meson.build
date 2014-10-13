@@ -1,27 +1,24 @@
 
 conf = configuration_data ()
 
-
 conf.set ('version', '0.1.0')
 
 compiler = meson.get_compiler ('c')
 
-code = '''
-#include <string.h>
+if compiler.has_function ('strnlen' , prefix : '#include <string.h>')
+    conf.set10 ('HAS_STRNLEN', 1)
+endif
 
-int main (int argc, char **argv) {
-    char tmp [128] ;
-    int len ;
-    len = strlcpy (tmp, "mokeke", sizeof (tmp)) ;
-    if (len == 6) {
-        return 0 ;
-    }
-    return 1 ;
-}
-'''
+if compiler.has_function ('strlen_s', prefix : '#include <string.h>')
+    conf.set10 ('HAS_STRLEN_S', 1)
+endif
 
-result = compiler.run (code, name : 'Check strlcpy')
+if compiler.has_function ('strlcpy' , prefix : '#include <string.h>')
+    conf.set10 ('HAS_STRLCPY', 1)
+endif
 
-conf.set10 ('TEST_ONLY', result.compiled ())
+if compiler.has_function ('strlcat' , prefix : '#include <string.h>')
+    conf.set10 ('HAS_STRLCAT', 1)
+endif
 
 configure_file (input : 'config.h.in', output : 'config.h', configuration : conf)

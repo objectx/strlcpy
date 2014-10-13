@@ -1,7 +1,7 @@
 /*
  * strlcpy.c: Naive implementation of 'strlcpy'.
  *
- * Copyright 2012 Masashi Fujita
+ * Copyright 2012-2014 Masashi Fujita
  *
  * License: Ms-Pl (http://www.opensource.org/licenses/ms-pl.html)
  */
@@ -9,7 +9,7 @@
 #include <string.h>
 #include "../include/config.h"
 
-#if defined (TEST_ONLY)
+#if defined (HAS_STRLCPY) && (HAS_STRLCPY != 0)
 #   define EXPORT_(X_) X_##_test
 #else
 #   define EXPORT_(X_) X_

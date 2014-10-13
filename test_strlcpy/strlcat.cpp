@@ -1,4 +1,10 @@
-
+/*
+ * strlcat.cpp:
+ *
+ * Copyright 2014 Masashi Fujita
+ *
+ * License: Ms-PL (http://www.opensource.org/licenses/ms-pl.html)
+ */
 #include "common.h"
 #include "catch.hpp"
 
@@ -10,7 +16,7 @@ SCENARIO ("strlcat", "[strlcat]") {
 
     size_t (*p_strlcat) (char *dst, const char *src, size_t dstsize) ;
 
-#ifdef TEST_ONLY
+#if defined (HAS_STRLCAT) && (HAS_STRLCAT != 0)
     p_strlcat = strlcat_test ;
 #else
     p_strlcat = strlcat ;
@@ -19,12 +25,14 @@ SCENARIO ("strlcat", "[strlcat]") {
     GIVEN ("0xFF filled buffer") {
         memset (dst, 0xFF, sizeof (dst)) ;
 
-#ifdef TEST_ONLY
+#if defined (HAS_STRLCAT) && (HAS_STRLCAT != 0)
+        INFO ("Passing nullptr to destination is undefined") ;
         WHEN ("strlcat to null") {
             result = p_strlcat (0, alphabets, sizeof (dst)) ;
         THEN ("strlcat should return 26") {
             REQUIRE (result == 26) ;
         }}
+        INFO ("Passing nullptr to source is undefined") ;
         WHEN ("strlcat from null") {
             result = p_strlcat (dst, 0, sizeof (dst)) ;
         THEN ("strlcat should return 0") {

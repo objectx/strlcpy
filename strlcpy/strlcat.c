@@ -1,7 +1,7 @@
 /*
  * strlcat.c: Naive implementation of 'strlcat'.
  *
- * Copyright 2012-14 Masashi Fujita
+ * Copyright 2012-2014 Masashi Fujita
  *
  * License: Ms-Pl (http://www.opensource.org/licenses/ms-pl.html)
  */
@@ -10,10 +10,18 @@
 
 #include "../include/config.h"
 
-#if defined (TEST_ONLY)
+#if defined (HAS_STRLCAT) && (HAS_STRLCAT != 0)
 #   define EXPORT_(X_) X_##_test
 #else
 #   define EXPORT_(X_) X_
+#endif
+
+#if defined (HAS_STRNLEN) && (HAS_STRNLEN != 0)
+#   define strlen_limited(S_, M_) (strnlen ((S_), (M_)))
+#elif defined (HAS_STRLEN_S) && (HAS_STRLEN_S != 0)
+#   define strlen_limited(S_, M_) (strlen_s ((S_), (M_)))
+#else
+#   error "No length limited strlen"
 #endif
 
 size_t  EXPORT_(strlcat) (char * dst, const char * src, size_t dstsize) {
@@ -29,11 +37,11 @@ size_t  EXPORT_(strlcat) (char * dst, const char * src, size_t dstsize) {
     }
     /* At this point, DST != nullptr */
     if (src == 0) {
-        return strnlen (dst, dstsize) ;
+        return strlen_limited (dst, dstsize) ;
     }
     /* At this poinit, DST != nullptr && SRC != nullptr */
     src_len = strlen (src) ;
-    dst_len = strnlen (dst, dstsize) ;
+    dst_len = strlen_limited (dst, dstsize) ;
     dstlimit = dstsize - 1 ;
 
     if (dstlimit < dst_len) {
