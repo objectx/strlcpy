@@ -1,5 +1,5 @@
 
-srcs = ['main.cpp']
+srcs = ['main.cpp', 'strlcat.cpp']
 
 test_strlcpy = executable ('test_strlcpy',
                            srcs,
