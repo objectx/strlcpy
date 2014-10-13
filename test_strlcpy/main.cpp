@@ -1,7 +1,7 @@
 /*
  * main.c: Tests for strlcpy & strlcat.
  *
- * Copyright 2012 Masashi Fujita
+ * Copyright 2012-2014 Masashi Fujita
  *
  * License: Ms-Pl (http://www.opensource.org/licenses/ms-pl.html)
  */
@@ -14,32 +14,43 @@ SCENARIO ("strlcpy", "[strlcpy]") {
     const char  alphabets [] = "abcdefghijklmnopqrstuvwxyz";
     size_t  alpha_len = strlen (alphabets);
     size_t  result;
+    size_t  (*p_strlcpy) (char *dst, const char *src, size_t dstsize) ;
+
+#ifdef TEST_ONLY
+    p_strlcpy = strlcpy_test ;
+#else
+    p_strlcpy = strlcpy ;
+#endif
 
     GIVEN ("0xFF filled buffer") {
         memset (dst, 0xFF, sizeof(dst));
+
         WHEN ("copy to 0 byte destination") {
-            result = strlcpy (dst, alphabets, 0);
+            result = p_strlcpy (dst, alphabets, 0);
         THEN ("strlcpy should return source string length (== 26)") {
             REQUIRE (result == alpha_len) ;
         AND_THEN ("Destination should not be modified") {
             REQUIRE (dst [0] == '\xFF');
         }}}
-#if 0
+
+#ifdef TEST_ONLY
         WHEN ("copy to null buffer") {
-            result = strlcpy (0, alphabets, sizeof (dst)) ;
+            result = p_strlcpy (0, alphabets, sizeof (dst)) ;
         THEN ("strlcpy should return source string length (== 26)") {
             REQUIRE (result == alpha_len) ;
         }}
+
         WHEN ("copy from null") {
-            result = strlcpy (dst, 0, sizeof (dst)) ;
+            result = p_strlcpy (dst, 0, sizeof (dst)) ;
         THEN ("strlcpy should return source string length (== 0)") {
             REQUIRE (result == 0) ;
         AND_THEN ("dst [0] should be \\0") {
             REQUIRE (dst [0] == 0) ;
         }}}
 #endif
+
         WHEN ("copying first 4 characters") {
-            result = strlcpy (dst, alphabets, 4) ;
+            result = p_strlcpy (dst, alphabets, 4) ;
         THEN ("strlcpy should returns 26") {
             REQUIRE (result == 26) ;
         AND_THEN ("dst [3] should be \\0") {
@@ -49,30 +60,21 @@ SCENARIO ("strlcpy", "[strlcpy]") {
         AND_THEN ("dst [0..3] should be \"abc\"") {
             REQUIRE (memcmp (dst, alphabets, 3) == 0) ;
         }}}}}
+
+        WHEN ("copying all of source characters") {
+            result = p_strlcpy (dst, alphabets, sizeof (dst)) ;
+        THEN ("strlcpy should return 26") {
+            REQUIRE (result == 26) ;
+        AND_THEN ("dst [26] should be \\0") {
+            REQUIRE (dst [alpha_len] == 0) ;
+        AND_THEN ("dst [27] should be \xFF") {
+            REQUIRE (dst [alpha_len + 1] == '\xFF') ;
+        AND_THEN ("dst [0..25] should be \"abcdefghijklmnopqrstuvwxyz\"") {
+            REQUIRE (memcmp (dst, alphabets, alpha_len) == 0) ;
+        }}}}}
     }
 }
 
-static void	test_strlcpy () {
-    char	dst [256];
-    const char	alphabets [] = "abcdefghijklmnopqrstuvwxyz";
-    size_t	alpha_len = strlen (alphabets);
-    size_t	result;
-
-
-    result = strlcpy (dst, alphabets, 4);
-    assert (result == 3);
-    assert (dst [3] == 0);
-    assert (dst [4] == '\xFF');
-    assert (memcmp (dst, alphabets, 3) == 0);
-
-    memset (dst, 0xFF, sizeof(dst));
-
-    result = strlcpy (dst, alphabets, sizeof(dst));
-    assert (result == alpha_len);
-    assert (dst [alpha_len + 0] == 0);
-    assert (dst [alpha_len + 1] = '\xFF');
-    assert (memcmp (dst, alphabets, alpha_len) == 0);
-}
 
 void	test_strlcat () {
     char	dst [256];
