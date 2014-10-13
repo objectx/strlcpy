@@ -1,7 +1,7 @@
 /*
  * strlcat.c: Naive implementation of 'strlcat'.
  *
- * Copyright 2012 Masashi Fujita
+ * Copyright 2012-14 Masashi Fujita
  *
  * License: Ms-Pl (http://www.opensource.org/licenses/ms-pl.html)
  */
