@@ -11,7 +11,7 @@
 #include "../include/config.h"
 
 #if defined (TEST_ONLY)
-#   define EXPORT_(X_) X_##test
+#   define EXPORT_(X_) X_##_test
 #else
 #   define EXPORT_(X_) X_
 #endif
