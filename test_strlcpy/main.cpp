@@ -6,6 +6,51 @@
  * License: Ms-Pl (http://www.opensource.org/licenses/ms-pl.html)
  */
 #include "common.h"
+#define CATCH_CONFIG_MAIN 1
+#include "catch.hpp"
+
+SCENARIO ("strlcpy", "[strlcpy]") {
+    char    dst [256];
+    const char  alphabets [] = "abcdefghijklmnopqrstuvwxyz";
+    size_t  alpha_len = strlen (alphabets);
+    size_t  result;
+
+    GIVEN ("0xFF filled buffer") {
+        memset (dst, 0xFF, sizeof(dst));
+        WHEN ("copy to 0 byte destination") {
+            result = strlcpy (dst, alphabets, 0);
+        THEN ("strlcpy should return source string length (== 26)") {
+            REQUIRE (result == alpha_len) ;
+        AND_THEN ("Destination should not be modified") {
+            REQUIRE (dst [0] == '\xFF');
+        }}}
+#if 0
+        WHEN ("copy to null buffer") {
+            result = strlcpy (0, alphabets, sizeof (dst)) ;
+        THEN ("strlcpy should return source string length (== 26)") {
+            REQUIRE (result == alpha_len) ;
+        }}
+        WHEN ("copy from null") {
+            result = strlcpy (dst, 0, sizeof (dst)) ;
+        THEN ("strlcpy should return source string length (== 0)") {
+            REQUIRE (result == 0) ;
+        AND_THEN ("dst [0] should be \\0") {
+            REQUIRE (dst [0] == 0) ;
+        }}}
+#endif
+        WHEN ("copying first 4 characters") {
+            result = strlcpy (dst, alphabets, 4) ;
+        THEN ("strlcpy should returns 26") {
+            REQUIRE (result == 26) ;
+        AND_THEN ("dst [3] should be \\0") {
+            REQUIRE (dst [3] == 0) ;
+        AND_THEN ("dst [4] should be unchanged") {
+            REQUIRE (dst [4] == '\xFF') ;
+        AND_THEN ("dst [0..3] should be \"abc\"") {
+            REQUIRE (memcmp (dst, alphabets, 3) == 0) ;
+        }}}}}
+    }
+}
 
 static void	test_strlcpy () {
     char	dst [256];
@@ -13,21 +58,6 @@ static void	test_strlcpy () {
     size_t	alpha_len = strlen (alphabets);
     size_t	result;
 
-    memset (dst, 0xFF, sizeof(dst));
-    result = strlcpy (dst, alphabets, 0);
-    assert (result == 0);
-    assert (dst [0] == '\xFF');
-
-    memset (dst, 0xFF, sizeof(dst));
-    result = strlcpy (0, alphabets, sizeof(dst));
-    assert (result == 0);
-
-    memset (dst, 0xFF, sizeof(dst));
-    result = strlcpy (dst, 0, sizeof(dst));
-    assert (result == 0);
-    assert (dst [0] == 0);
-
-    memset (dst, 0xFF, sizeof(dst));
 
     result = strlcpy (dst, alphabets, 4);
     assert (result == 3);
@@ -183,17 +213,6 @@ void	test_strconcat () {
     assert (dst [2 * alpha_len + 1] == '\xFF');
     assert (memcmp (dst, alphabets, alpha_len) == 0);
     assert (memcmp (dst + alpha_len, alphabets, alpha_len) == 0);
-}
-
-int	main (int argc, char ** argv) {
-    printf ("Testing strlcpy.\n");
-    test_strlcpy ();
-    printf ("Testing strlcat\n");
-    test_strlcat ();
-    printf ("Testing strconcat\n");
-    test_strconcat ();
-    printf ("All tests are passed.\n") ;
-    return 0;
 }
 
 /*

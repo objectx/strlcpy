@@ -1,7 +1,7 @@
 
-project ('strlcpy', 'c')
+project ('strlcpy', 'c', 'cpp')
 
-incs = include_directories ('include')
+incs = include_directories ('include', 'Catch/include')
 
 subdir ('include')
 subdir ('strlcpy')

@@ -20,6 +20,7 @@
 #include <assert.h>
 #include <stdarg.h>
 
+#include "config.h"
 #if defined (__cplusplus)
 extern "C" {
 #endif
