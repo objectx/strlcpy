@@ -37,6 +37,7 @@ SCENARIO ("strlcpy", "[strlcpy]") {
         WHEN ("copy to null buffer") {
             result = p_strlcpy (0, alphabets, sizeof (dst)) ;
         THEN ("strlcpy should return source string length (== 26)") {
+
             REQUIRE (result == alpha_len) ;
         }}
 
@@ -54,25 +55,21 @@ SCENARIO ("strlcpy", "[strlcpy]") {
             result = p_strlcpy (dst, alphabets, 4) ;
         THEN ("strlcpy should returns 26") {
             REQUIRE (result == 26) ;
-        AND_THEN ("dst [3] should be \\0") {
-            REQUIRE (dst [3] == 0) ;
-        AND_THEN ("dst [4] should be unchanged") {
+        AND_THEN ("dst should be \"abc\"") {
+            REQUIRE (memcmp (dst, "abc", 4) == 0) ;
+        AND_THEN ("Unused area should not be changed") {
             REQUIRE (dst [4] == '\xFF') ;
-        AND_THEN ("dst [0..3] should be \"abc\"") {
-            REQUIRE (memcmp (dst, alphabets, 3) == 0) ;
-        }}}}}
+        }}}}
 
         WHEN ("copying all of source characters") {
             result = p_strlcpy (dst, alphabets, sizeof (dst)) ;
         THEN ("strlcpy should return 26") {
             REQUIRE (result == 26) ;
-        AND_THEN ("dst [26] should be \\0") {
-            REQUIRE (dst [alpha_len] == 0) ;
-        AND_THEN ("dst [27] should be \xFF") {
+        AND_THEN ("dst should be \"abcdefghijklmnopqrstuvwxyz\"") {
+            REQUIRE (memcmp (dst, alphabets, alpha_len + 1) == 0) ;
+        AND_THEN ("Unused area should not be changed") {
             REQUIRE (dst [alpha_len + 1] == '\xFF') ;
-        AND_THEN ("dst [0..25] should be \"abcdefghijklmnopqrstuvwxyz\"") {
-            REQUIRE (memcmp (dst, alphabets, alpha_len) == 0) ;
-        }}}}}
+        }}}}
     }
 }
 
