@@ -26,21 +26,21 @@ SCENARIO ("strlcat", "[strlcat]") {
         memset (dst, 0xFF, sizeof (dst)) ;
 
 #if defined (HAS_STRLCAT) && (HAS_STRLCAT != 0)
-        INFO ("Passing nullptr to destination is undefined") ;
         WHEN ("strlcat to null") {
             result = p_strlcat (0, alphabets, sizeof (dst)) ;
-        THEN ("strlcat should return 26") {
+        THEN ("Should return 26") {
+            INFO ("Passing nullptr to destination is undefined") ;
             REQUIRE (result == 26) ;
         }}
-        INFO ("Passing nullptr to source is undefined") ;
         WHEN ("strlcat from null") {
             result = p_strlcat (dst, 0, sizeof (dst)) ;
-        THEN ("strlcat should return 0") {
+        THEN ("Should return 0") {
+            INFO ("Passing nullptr to source is undefined") ;
             REQUIRE (result == 256) ;
         }}
         WHEN ("strlcat from empty string") {
             result = p_strlcat (dst, "", sizeof (dst)) ;
-        THEN ("strlcat should return 0") {
+        THEN ("Should return 0") {
             REQUIRE (result == 256) ;
         }}
 #endif
@@ -49,15 +49,12 @@ SCENARIO ("strlcat", "[strlcat]") {
             REQUIRE (result == 26) ;
         AND_WHEN ("strlcat with empty string") {
             result = p_strlcat (dst, "", sizeof (dst)) ;
-        THEN ("strlcat should return 26") {
+        THEN ("Should return \"abcdefghijklmnopqrstuvwxyz\"") {
             REQUIRE (result == alpha_len) ;
-        AND_THEN ("dst [26] == '\0'") {
-            REQUIRE (dst [alpha_len + 0] == 0) ;
-        AND_THEN ("dst [27] == '\xFF'") {
+            REQUIRE (memcmp (dst, alphabets, alpha_len + 1) == 0) ;
+        AND_THEN ("Unused area should not be changed") {
             REQUIRE (dst [alpha_len + 1] == '\xFF') ;
-        AND_THEN ("dst should match alphabets") {
-            REQUIRE (memcmp (dst, alphabets, alpha_len) == 0) ;
-        }}}}}}
+        }}}}
 
         WHEN ("Append to \"ABCD\"") {
             dst [0] = 'A';
@@ -65,17 +62,14 @@ SCENARIO ("strlcat", "[strlcat]") {
             dst [2] = 'C';
             dst [3] = 'D';
             dst [4] = 0;
-        AND_WHEN ("append alphabets") {
+        AND_WHEN ("append alphabets (destination size == 3)") {
             result = p_strlcat (dst, alphabets, 3) ;
         THEN ("strlcat should return 29") {
             REQUIRE (result == 29) ;
-        AND_THEN ("dst [4] == 0") {
-            REQUIRE (dst [4] == 0) ;
-        AND_THEN ("dst [5] == '\xFF'") {
+            REQUIRE (memcmp (dst, "ABCD", 5) == 0) ;
+        AND_THEN ("Unused area should not be changed") {
             REQUIRE (dst [5] == '\xFF') ;
-        AND_THEN ("dst should be \"ABCD\"") {
-            REQUIRE (memcmp (dst, "ABCD", 4) == 0) ;
-        }}}}}}
+        }}}}
 
         WHEN ("Append to \"ABCD\"") {
             dst [0] = 'A';
@@ -85,16 +79,11 @@ SCENARIO ("strlcat", "[strlcat]") {
             dst [4] = 0;
         AND_WHEN ("append alphabets") {
             result = p_strlcat (dst, alphabets, sizeof (dst)) ;
-        THEN ("strlcat should return 30") {
+        THEN ("dst should be \"ABCDabcdefghijklmnopqrstuvwxyz\"") {
             REQUIRE (result == 30) ;
-        AND_THEN ("dst [4 + 26 + 0] == 0") {
-            REQUIRE (dst [4 + alpha_len + 0] == 0) ;
-        AND_THEN ("dst [4 + 26 + 1] == '\xFF'") {
+            REQUIRE (memcmp (dst, "ABCDabcdefghijklmnopqrstuvwxyz", 4 + alpha_len + 1) == 0) ;
+        AND_THEN ("Unused area should not be changed") {
             REQUIRE (dst [4 + alpha_len + 1] == '\xFF') ;
-        AND_THEN ("Start with \"ABCD\"") {
-            REQUIRE (memcmp (dst, "ABCD", 4) == 0) ;
-        AND_THEN ("And follows alphabets") {
-            REQUIRE (memcmp (dst + 4, alphabets, alpha_len) == 0) ;
-        }}}}}}}
+        }}}}
     }
 }
