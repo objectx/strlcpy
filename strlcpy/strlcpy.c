@@ -16,19 +16,24 @@
 #endif
 
 size_t  EXPORT_(strlcpy) (char * dst, const char * src, size_t dstsize) {
+    size_t src_len ;
+    size_t len ;
+    size_t dstlimit ;
+
     if (src == 0) {
         if (dst != 0 && 0 < dstsize) {
             dst [0] = 0 ;
         }
         return 0 ;
     }
-    size_t  src_len = strlen (src) ;
-    size_t  len = src_len ;
+
+    src_len = strlen (src) ;
+    len = src_len ;
 
     if (dst == 0 || dstsize == 0) {
         return src_len ;
     }
-    size_t  dstlimit = dstsize - 1 ;
+    dstlimit = dstsize - 1 ;
 
     if (dstlimit < len) {
         len = dstlimit ;
@@ -42,4 +47,3 @@ size_t  EXPORT_(strlcpy) (char * dst, const char * src, size_t dstsize) {
 /*
  * [END OF FILE]
  */
-
