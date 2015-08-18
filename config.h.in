@@ -4,11 +4,11 @@
 #ifndef config_h_C3010F9066DB4D928E131E9DECF39A3E
 #define config_h_C3010F9066DB4D928E131E9DECF39A3E
 
-#define STRLCPY_VERSION "@version@"
+#define STRLCPY_VERSION "@STRLCPY_VERSION@"
 
-#mesondefine HAS_STRNLEN
-#mesondefine HAS_STRLEN_S
-#mesondefine HAS_STRLCPY
-#mesondefine HAS_STRLCAT
+#cmakedefine HAVE_STRNLEN
+#cmakedefine HAVE_STRLEN_S
+#cmakedefine HAVE_STRLCPY
+#cmakedefine HAVE_STRLCAT
 
 #endif /* config_h_C3010F9066DB4D928E131E9DECF39A3E */

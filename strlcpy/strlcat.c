@@ -8,23 +8,25 @@
 #include <sys/types.h>
 #include <string.h>
 
-#include "../include/config.h"
-
-#if defined (HAS_STRLCAT) && (HAS_STRLCAT != 0)
-#   define EXPORT_(X_) X_##_test
-#else
-#   define EXPORT_(X_) X_
+#if HAVE_CONFIG_H
+#   include "config.h"
 #endif
 
-#if defined (HAS_STRNLEN) && (HAS_STRNLEN != 0)
+#ifdef HAVE_STRLCAT
+#   define export_strlcat   strlcat_test
+#else
+#   define export_strlcat   strlcat
+#endif
+
+#if defined (HAVE_STRNLEN)
 #   define strlen_limited(S_, M_) (strnlen ((S_), (M_)))
-#elif defined (HAS_STRLEN_S) && (HAS_STRLEN_S != 0)
+#elif defined (HAVE_STRLEN_S)
 #   define strlen_limited(S_, M_) (strlen_s ((S_), (M_)))
 #else
 #   error "No length limited strlen"
 #endif
 
-size_t  EXPORT_(strlcat) (char * dst, const char * src, size_t dstsize) {
+size_t  export_strlcat (char * dst, const char * src, size_t dstsize) {
     size_t src_len ;
     size_t dst_len ;
     size_t dstlimit ;

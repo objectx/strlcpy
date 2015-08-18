@@ -10,7 +10,6 @@
 #include <string.h>
 #include <stdarg.h>
 
-
 size_t	vstrconcat (char *dst, size_t dstsize, size_t cntArgs, va_list ap) {
     size_t dstlimit = dstsize - 1 ;
     size_t total = 0 ;

@@ -22,11 +22,11 @@
 extern "C" {
 #endif
 
-#if defined (HAS_STRLCPY) && (HAS_STRLCPY != 0)
+#ifdef HAVE_STRLCPY
 extern size_t	strlcpy_test (char * dst, const char * src, size_t dstsize);
 #endif
 
-#if defined (HAS_STRLCAT) && (HAS_STRLCAT != 0)
+#ifdef HAVE_STRLCAT
 extern size_t	strlcat_test (char * dst, const char * src, size_t dstsize);
 #endif
 

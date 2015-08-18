@@ -16,7 +16,7 @@ SCENARIO ("strlcat", "[strlcat]") {
 
     size_t (*p_strlcat) (char *dst, const char *src, size_t dstsize) ;
 
-#if defined (HAS_STRLCAT) && (HAS_STRLCAT != 0)
+#ifdef HAVE_STRLCAT
     p_strlcat = strlcat_test ;
 #else
     p_strlcat = strlcat ;
@@ -25,7 +25,7 @@ SCENARIO ("strlcat", "[strlcat]") {
     GIVEN ("0xFF filled buffer") {
         memset (dst, 0xFF, sizeof (dst)) ;
 
-#if defined (HAS_STRLCAT) && (HAS_STRLCAT != 0)
+#ifdef HAVE_STRLCAT
         WHEN ("strlcat to null") {
             result = p_strlcat (0, alphabets, sizeof (dst)) ;
         THEN ("Should return 26") {
