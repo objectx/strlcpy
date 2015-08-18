@@ -7,15 +7,18 @@
  */
 #include <sys/types.h>
 #include <string.h>
-#include "../include/config.h"
 
-#if defined (HAS_STRLCPY) && (HAS_STRLCPY != 0)
-#   define EXPORT_(X_) X_##_test
-#else
-#   define EXPORT_(X_) X_
+#ifdef HAVE_CONFIG_H
+#   include "config.h"
 #endif
 
-size_t  EXPORT_(strlcpy) (char * dst, const char * src, size_t dstsize) {
+#ifdef HAVE_STRLCPY
+#   define export_strlcpy   strlcpy_test
+#else
+#   define export_strlcpy   strlcpy
+#endif
+
+size_t  export_strlcpy (char * dst, const char * src, size_t dstsize) {
     size_t src_len ;
     size_t len ;
     size_t dstlimit ;

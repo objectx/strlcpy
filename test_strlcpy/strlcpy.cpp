@@ -15,7 +15,7 @@ SCENARIO ("strlcpy", "[strlcpy]") {
     size_t  result;
     size_t  (*p_strlcpy) (char *dst, const char *src, size_t dstsize) ;
 
-#if defined (HAS_STRLCPY) && (HAS_STRLCPY != 0)
+#ifdef HAVE_STRLCPY
     p_strlcpy = strlcpy_test ;
 #else
     p_strlcpy = strlcpy ;
@@ -32,7 +32,7 @@ SCENARIO ("strlcpy", "[strlcpy]") {
             REQUIRE (dst [0] == '\xFF');
         }}}
 
-#if defined (HAS_STRLCPY) && (HAS_STRLCPY != 0)
+#ifdef HAVE_STRLCPY
         INFO ("Darwin's strlcpy does not allow nullptr for destination.") ;
         WHEN ("copy to null buffer") {
             result = p_strlcpy (0, alphabets, sizeof (dst)) ;
@@ -72,4 +72,3 @@ SCENARIO ("strlcpy", "[strlcpy]") {
         }}}}
     }
 }
-
