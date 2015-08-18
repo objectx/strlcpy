@@ -6,7 +6,7 @@
  * License: Ms-Pl (http://www.opensource.org/licenses/ms-pl.html)
  */
 #include "common.h"
-#define CATCH_CONFIG_MAIN 1
+#define CATCH_CONFIG_MAIN   1
 #include "catch.hpp"
 
 /*

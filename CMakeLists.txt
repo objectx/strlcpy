@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.1)
 
 project (STRLCPY
     LANGUAGES C
-    VERSION 1.0.0.0)
+    VERSION 1.0.0.1)
 
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
 
@@ -20,7 +20,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
     add_definitions ("-DNDEBUG")
 endif ()
 
-set (COTIRE_VERBOSE TRUE)
+set (COTIRE_VERBOSE FALSE)
 
 include (CheckFunctionExists)
 include (cotire OPTIONAL)
