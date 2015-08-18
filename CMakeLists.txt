@@ -20,7 +20,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
     add_definitions ("-DNDEBUG")
 endif ()
 
-set (COTIRE_VERBOSE TRUE)
+set (COTIRE_VERBOSE FALSE)
 
 include (CheckFunctionExists)
 include (cotire OPTIONAL)
