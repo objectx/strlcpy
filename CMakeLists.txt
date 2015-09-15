@@ -24,6 +24,7 @@ set (COTIRE_VERBOSE FALSE)
 
 include (CheckFunctionExists)
 include (cotire OPTIONAL)
+include (EnableCatch)
 
 enable_testing ()
 

@@ -1,6 +1,6 @@
 
 #include "common.h"
-#include "catch.hpp"
+#include "catch/catch.hpp"
 
 SCENARIO ("strconcat", "[strconcat]") {
     char dst [256] ;

@@ -6,7 +6,7 @@
  * License: Ms-PL (http://www.opensource.org/licenses/ms-pl.html)
  */
 #include "common.h"
-#include "catch.hpp"
+#include "catch/catch.hpp"
 
 SCENARIO ("strlcat", "[strlcat]") {
     char dst [256] ;
