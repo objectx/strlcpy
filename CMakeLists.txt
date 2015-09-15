@@ -36,5 +36,5 @@ check_function_exists (strlcat  HAVE_STRLCAT)
 configure_file ("${CMAKE_SOURCE_DIR}/config.h.in" "${CMAKE_BINARY_DIR}/config.h" @ONLY)
 add_definitions ("-DHAVE_CONFIG_H=1")
 
-add_subdirectory (strlcpy)
-add_subdirectory (test_strlcpy)
+add_subdirectory (src)
+add_subdirectory (test)
