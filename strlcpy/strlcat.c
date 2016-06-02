@@ -26,6 +26,10 @@
 #   error "No length limited strlen"
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 size_t  export_strlcat (char * dst, const char * src, size_t dstsize) {
     size_t src_len ;
     size_t dst_len ;
@@ -62,6 +66,9 @@ size_t  export_strlcat (char * dst, const char * src, size_t dstsize) {
     }
 }
 
+#ifdef __cplusplus
+}
+#endif
 /*
  * [END OF FILE]
  */

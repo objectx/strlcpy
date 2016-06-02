@@ -24,10 +24,14 @@ extern "C" {
 
 #ifdef HAVE_STRLCPY
 extern size_t	strlcpy_test (char * dst, const char * src, size_t dstsize);
+#else
+extern size_t   strlcpy (char *dst, const char *src, size_t distsize) ;
 #endif
 
 #ifdef HAVE_STRLCAT
 extern size_t	strlcat_test (char * dst, const char * src, size_t dstsize);
+#else
+extern size_t	strlcat (char * dst, const char * src, size_t dstsize);
 #endif
 
 extern size_t	strconcat (char * dst, size_t dstsize, size_t cntArgs, ...);
