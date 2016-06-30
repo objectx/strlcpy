@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.4)
 
 project (STRLCPY
          LANGUAGES C
-         VERSION 1.0.0.1)
+         VERSION 1.0.1.1)
 
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
 
