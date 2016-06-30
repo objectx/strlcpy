@@ -16,6 +16,8 @@
 #include <memory.h>
 #include <assert.h>
 #include <stdarg.h>
+#include <array>
+#include <strconcat.hpp>
 
 #include "config.h"
 #if defined (__cplusplus)
@@ -34,8 +36,6 @@ extern size_t strlcat_test (char *dst, const char *src, size_t dstsize);
 extern size_t strlcat (char *dst, const char *src, size_t dstsize);
 #endif
 
-extern size_t	strconcat (char * dst, size_t dstsize, size_t cntArgs, ...);
-extern size_t	vstrconcat (char * dst, size_t dstsize, size_t cntArgs, va_list ap);
 
 #if defined (__cplusplus)
 }	/* end of [extern "C"] */

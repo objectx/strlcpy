@@ -3,6 +3,51 @@
 #include "catch/catch.hpp"
 
 SCENARIO ("strconcat", "[strconcat]") {
+    REQUIRE (strconcat (nullptr, 0) == -E2BIG) ;
+
+    std::array<char, 256>   dst ;
+    const char alphabets [] = "abcdefghijklmnopqrstuvwxyz" ;
+    size_t alpha_len = strlen (alphabets) ;
+
+    GIVEN ("\xFF filled buffer") {
+        dst.fill (0xFF) ;
+        WHEN ("Call with empty string") {
+            auto result = strconcat (dst.data (), dst.size (), "") ;
+        THEN ("Should return empty string") {
+            REQUIRE (result == 0) ;
+            REQUIRE (dst [0] == 0) ;
+            REQUIRE (dst [1] == '\xFF') ;
+        }}
+        WHEN ("Call with \"\" and alphabets") {
+            auto result = strconcat (dst.data (), dst.size (), "", alphabets) ;
+        THEN ("Should return \"abcdefghijklmnopqrstuvwxyz\"") {
+            REQUIRE (result == alpha_len) ;
+            REQUIRE (dst [26 + 0] == 0) ;
+            REQUIRE (dst [26 + 1] == '\xFF') ;
+            REQUIRE (memcmp (dst.data (), alphabets, alpha_len) == 0) ;
+        }}
+        WHEN ("Call with \"\" and alphabets (use `std::string`)") {
+            auto result = strconcat (dst.data (), dst.size (), "", std::string { alphabets }) ;
+        THEN ("Should return \"abcdefghijklmnopqrstuvwxyz\"") {
+            REQUIRE (result == alpha_len) ;
+            REQUIRE (dst [26 + 0] == 0) ;
+            REQUIRE (dst [26 + 1] == '\xFF') ;
+            REQUIRE (memcmp (dst.data (), alphabets, alpha_len) == 0) ;
+        }}
+        WHEN ("Call with \"abc\" \"def\" \"ghi\"") {
+            auto result = strconcat (dst.data (), dst.size (), "abc", std::string { "def" }, "ghi") ;
+            THEN ("Should return \"abcdefghi\"") {
+                REQUIRE (result == 9) ;
+                REQUIRE (dst [9 + 0] == 0) ;
+                REQUIRE (dst [9 + 1] == '\xFF') ;
+                REQUIRE (memcmp (dst.data (), "abcdefghi", 9) == 0) ;
+            }
+        }
+    }
+}
+
+#ifdef notdef
+SCENARIO ("strconcat", "[strconcat]") {
     char dst [256] ;
     const char  alphabets [] = "abcdefghijklmnopqrstuvwxyz";
     size_t  alpha_len = strlen (alphabets);
@@ -89,3 +134,4 @@ SCENARIO ("strconcat", "[strconcat]") {
         }}
     }
 }
+#endif
