@@ -18,6 +18,10 @@
 #   define export_strlcpy   strlcpy
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 size_t  export_strlcpy (char * dst, const char * src, size_t dstsize) {
     size_t src_len ;
     size_t len ;
@@ -47,6 +51,9 @@ size_t  export_strlcpy (char * dst, const char * src, size_t dstsize) {
     return src_len ;
 }
 
+#ifdef __cplusplus
+}
+#endif
 /*
  * [END OF FILE]
  */
