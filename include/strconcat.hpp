@@ -15,11 +15,12 @@ namespace strconcat_internal {
     /**
      * Holds currently constructing string.
      */
-    struct buffer {
+    class buffer final {
+    private:
         char *  buf_ = nullptr ;
         char *  p_   = nullptr ;
         char *  end_ = nullptr ;
-
+    public:
         buffer (char *buf, size_t sz)
                 : buf_ { buf }
                 , p_ { buf }
@@ -32,39 +33,33 @@ namespace strconcat_internal {
         }
 
         ssize_t concat () {
-            assert (p_ <= end_) ;
             *p_ = 0 ;
             return static_cast<ssize_t> (p_ - buf_) ;
         }
 
-        // template <typename ...ARGS_> ssize_t concat (const char *s, ARGS_...args) ;
-        // template <typename ...ARGS_> ssize_t concat (const std::string &s, ARGS_...args) ;
-
         template <typename ...ARGS_>
-            ssize_t concat_helper (size_t l, const char *s, ARGS_...args) {
+            ssize_t concat_helper (size_t l, const char *s, ARGS_ ...args) {
                 auto room = remain () ;
                 if (room < l) {
                     // Truncation occur
                     memcpy (p_, s, room) ;
                     p_ += room ;
                     *p_ = 0 ;
-                    assert (p_ <= end_) ;
                     return static_cast<ssize_t> (-E2BIG) ;
                 }
                 memcpy (p_, s, l) ;
                 p_ += l ;
-                assert (p_ <= end_) ;
                 return concat (args...) ;
             }
 
         template <typename ...ARGS_>
-            ssize_t concat (const char *s, ARGS_...args) {
+            ssize_t concat (const char *s, ARGS_ ...args) {
                 size_t l = strlen (s) ;
                 return concat_helper (l, s, args...) ;
             }
 
         template <typename ...ARGS_>
-            ssize_t concat (const std::string &s, ARGS_...args) {
+            ssize_t concat (const std::string &s, ARGS_ ...args) {
                 return concat_helper (static_cast<size_t> (s.size ()), s.c_str (), args...) ;
             }
     } ;
