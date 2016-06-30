@@ -1,9 +1,9 @@
 
-cmake_minimum_required (VERSION 3.1)
+cmake_minimum_required (VERSION 3.4)
 
 project (STRLCPY
-    LANGUAGES C
-    VERSION 1.0.0.1)
+         LANGUAGES C
+         VERSION 1.0.1.1)
 
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
 
@@ -24,6 +24,7 @@ set (COTIRE_VERBOSE FALSE)
 
 include (CheckFunctionExists)
 include (cotire OPTIONAL)
+include (EnableCatch)
 
 enable_testing ()
 
@@ -35,5 +36,5 @@ check_function_exists (strlcat  HAVE_STRLCAT)
 configure_file ("${CMAKE_SOURCE_DIR}/config.h.in" "${CMAKE_BINARY_DIR}/config.h" @ONLY)
 add_definitions ("-DHAVE_CONFIG_H=1")
 
-add_subdirectory (strlcpy)
-add_subdirectory (test_strlcpy)
+add_subdirectory (src)
+add_subdirectory (test)
