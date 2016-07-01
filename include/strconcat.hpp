@@ -84,4 +84,10 @@ template <typename ...ARGS_>
         }
         return strconcat_internal::buffer { buf, bufsize }.concat (args...) ;
     }
+
+template <size_t N_, typename ...ARGS_>
+    int_fast64_t strconcat (std::array<char, N_> &dst, ARGS_ ...args) {
+        return strconcat_internal::buffer { dst.data (), dst.size () }.concat (args...) ;
+    }
+
 #endif /* strconcat_hpp__4029f4e5d9284f11a3787353984d4253 */
