@@ -68,9 +68,9 @@ namespace strconcat_internal {
                 return concat_helper (l, s, args...) ;
             }
 
-        template <typename ...ARGS_>
-            size_type concat (const std::string &s, ARGS_ ...args) {
-                return concat_helper (static_cast<size_t> (s.size ()), s.c_str (), args...) ;
+        template <typename Alloc_, typename ...ARGS_>
+            size_type concat (const std::basic_string<char, std::char_traits<char>, Alloc_> &s, ARGS_ ...args) {
+                return concat_helper (static_cast<size_t> (s.size ()), s.data (), args...) ;
             }
     } ;
 
