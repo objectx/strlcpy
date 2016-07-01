@@ -10,16 +10,20 @@
 #include <cassert>
 #include <string>
 #include <cerrno>
+#include <array>
 
 namespace strconcat_internal {
     /**
      * Holds currently constructing string.
      */
-    struct buffer {
+    class buffer final {
+    public:
+        using size_type = int64_t ;
+    private:
         char *  buf_ = nullptr ;
         char *  p_   = nullptr ;
         char *  end_ = nullptr ;
-
+    public:
         buffer (char *buf, size_t sz)
                 : buf_ { buf }
                 , p_ { buf }
@@ -31,40 +35,41 @@ namespace strconcat_internal {
             return static_cast<size_t> (end_ - p_) ;
         }
 
-        ssize_t concat () {
-            assert (p_ <= end_) ;
+        size_type concat () {
             *p_ = 0 ;
-            return static_cast<ssize_t> (p_ - buf_) ;
+            return static_cast<size_type> (p_ - buf_) ;
         }
 
-        // template <typename ...ARGS_> ssize_t concat (const char *s, ARGS_...args) ;
-        // template <typename ...ARGS_> ssize_t concat (const std::string &s, ARGS_...args) ;
+        bool append (const char *s, size_t sz) {
+            auto room = remain () ;
+            if (room < sz) {
+                // Truncation occur!
+                memcpy (p_, s, room) ;
+                p_ += room ;
+                *p_ = 0 ;
+                return false ;
+            }
+            memcpy (p_, s, sz) ;
+            p_ += sz ;
+            return true ;
+        }
 
         template <typename ...ARGS_>
-            ssize_t concat_helper (size_t l, const char *s, ARGS_...args) {
-                auto room = remain () ;
-                if (room < l) {
-                    // Truncation occur
-                    memcpy (p_, s, room) ;
-                    p_ += room ;
-                    *p_ = 0 ;
-                    assert (p_ <= end_) ;
-                    return static_cast<ssize_t> (-E2BIG) ;
+            size_type concat_helper (size_t l, const char *s, ARGS_ ...args) {
+                if (! append (s, l)) {
+                    return static_cast<size_type> (-E2BIG) ;
                 }
-                memcpy (p_, s, l) ;
-                p_ += l ;
-                assert (p_ <= end_) ;
                 return concat (args...) ;
             }
 
         template <typename ...ARGS_>
-            ssize_t concat (const char *s, ARGS_...args) {
+            size_type concat (const char *s, ARGS_ ...args) {
                 size_t l = strlen (s) ;
                 return concat_helper (l, s, args...) ;
             }
 
         template <typename ...ARGS_>
-            ssize_t concat (const std::string &s, ARGS_...args) {
+            size_type concat (const std::string &s, ARGS_ ...args) {
                 return concat_helper (static_cast<size_t> (s.size ()), s.c_str (), args...) ;
             }
     } ;
@@ -83,10 +88,16 @@ namespace strconcat_internal {
  * @return Length of constructed string
  */
 template <typename ...ARGS_>
-    ssize_t strconcat (char *buf, size_t bufsize, ARGS_ ...args) {
+    int_fast64_t strconcat (char *buf, size_t bufsize, ARGS_ ...args) {
         if (buf == nullptr || bufsize == 0) {
-            return static_cast<ssize_t> (-E2BIG) ;
+            return static_cast<int64_t> (-E2BIG) ;
         }
         return strconcat_internal::buffer { buf, bufsize }.concat (args...) ;
     }
+
+template <size_t N_, typename ...ARGS_>
+    int_fast64_t strconcat (std::array<char, N_> &dst, ARGS_ ...args) {
+        return strconcat_internal::buffer { dst.data (), dst.size () }.concat (args...) ;
+    }
+
 #endif /* strconcat_hpp__4029f4e5d9284f11a3787353984d4253 */
