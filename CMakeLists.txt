@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.4)
 
 project (STRLCPY
          LANGUAGES C
-         VERSION 1.0.1.1)
+         VERSION 2.0.1.1)
 
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
 
@@ -11,10 +11,12 @@ set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
-set (CMAKE_CXX_FLAGS_DEBUG "-g")
-set (CMAKE_C_FLAGS_DEBUG   "-g")
-set (CMAKE_CXX_FLAGS_RELEASE "-O3")
-set (CMAKE_C_FLAGS_RELEASE   "-O3")
+if (NOT ${MSVC})
+    set (CMAKE_CXX_FLAGS_DEBUG "-g")
+    set (CMAKE_C_FLAGS_DEBUG   "-g")
+    set (CMAKE_CXX_FLAGS_RELEASE "-O3")
+    set (CMAKE_C_FLAGS_RELEASE   "-O3")
+endif ()
 
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
     add_definitions ("-DNDEBUG")
