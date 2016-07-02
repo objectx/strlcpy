@@ -1,6 +1,8 @@
-//
-// Copyright (c) 2016 Polyphony Digital Inc. All rights reserved.
-//
+/*
+ * strconcat.hpp: Concatenate strings.
+ *
+ * Copyright (c) 2016 Masahi Fujita
+ */
 #pragma once
 #ifndef strconcat_hpp__4029f4e5d9284f11a3787353984d4253
 #define strconcat_hpp__4029f4e5d9284f11a3787353984d4253 1
@@ -73,11 +75,10 @@ namespace strconcat_internal {
                 return concat_helper (static_cast<size_t> (s.size ()), s.data (), args...) ;
             }
     } ;
-
 }
 
 /**
- * Concatenate supplied strings.
+ * Concatenates supplied strings.
  *
  * Both `std::string` and `const char *` was allowed as sources.
  * '\0' termination was guarranteed.
@@ -85,7 +86,7 @@ namespace strconcat_internal {
  * @param [out] buf Result string constructed here
  * @param bufsize Maximum string length to build
  * @param args Source strings
- * @return Length of constructed string
+ * @return Length of the constructed string if success, otherwise return `-E2BIG`
  */
 template <typename ...ARGS_>
     int_fast64_t strconcat (char *buf, size_t bufsize, ARGS_ ...args) {
@@ -95,6 +96,13 @@ template <typename ...ARGS_>
         return strconcat_internal::buffer { buf, bufsize }.concat (args...) ;
     }
 
+/**
+ * Concatenates supplied strings
+ *
+ * @param [out] dst Result string constructed here
+ * @param args Source strings
+ * @return Length of the constructed string if success, otherwise return `-E2BIG`
+ */
 template <size_t N_, typename ...ARGS_>
     int_fast64_t strconcat (std::array<char, N_> &dst, ARGS_ ...args) {
         return strconcat_internal::buffer { dst.data (), dst.size () }.concat (args...) ;
