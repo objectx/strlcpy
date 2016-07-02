@@ -66,8 +66,10 @@ namespace strconcat_internal {
 
         template <typename ...ARGS_>
             size_type concat (const char *s, ARGS_ ...args) {
-                size_t l = strlen (s) ;
-                return concat_helper (l, s, args...) ;
+                if (s == nullptr) {
+                    return concat (args...) ;
+                }
+                return concat_helper (strlen (s), s, args...) ;
             }
 
         template <typename Alloc_, typename ...ARGS_>
