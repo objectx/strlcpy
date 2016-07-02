@@ -14,9 +14,10 @@ add_executable (${TARGET} ${SOURCE_FILES})
     set_target_properties (${TARGET} PROPERTIES
          COTIRE_PREFIX_HEADER_INCLUDE_PATH "${CATCH_INCLUDE_DIR}")
     set_source_files_properties (main.cpp PROPERTIES COTIRE_EXCLUDED TRUE)
+    target_compile_features (${TARGET} PRIVATE cxx_auto_type)
 
 if (COMMAND cotire)
-    # cotire (${TARGET})
+    cotire (${TARGET})
 endif ()
 
 add_test (NAME test-strlcpy
